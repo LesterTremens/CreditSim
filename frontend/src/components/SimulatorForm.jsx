@@ -29,11 +29,13 @@ export default function SimulatorForm({
               inputMode="decimal"
               placeholder="e.g. 100000"
               required
+              type="number"
             />
           </Field>
   
           <Field label="Tasa anual (%)" hint="Tasa nominal anual">
             <input
+              type="number"
               name="annual_rate"
               value={value.annual_rate}
               onChange={onChange}
@@ -45,6 +47,7 @@ export default function SimulatorForm({
   
           <Field label="Plazo (meses)" hint="Número total de pagos">
             <input
+              type="number"
               name="term_months"
               value={value.term_months}
               onChange={onChange}
