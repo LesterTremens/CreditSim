@@ -7,6 +7,8 @@ from app.db.session import get_db
 from app.models.simulation import Simulation
 from app.schemas.simulate import SimulateRequest
 from app.services.amortization import calculate_french_amortization
+from app.api.routes.auth import get_current_user
+from app.models.user import User
 
 logger = logging.getLogger("creditsim.api")
 router = APIRouter(tags=["simulate"])
@@ -24,7 +26,12 @@ def _to_json_safe(result: dict) -> dict:
     return result
 
 @router.post("/simulate")
-def simulate(payload: SimulateRequest, background_tasks: BackgroundTasks, db: Session = Depends(get_db)):
+def simulate(
+    payload: SimulateRequest,
+    background_tasks: BackgroundTasks,
+    db: Session = Depends(get_db),
+    current_user: User = Depends(get_current_user),
+):
     result = calculate_french_amortization(
         amount=payload.amount,
         annual_rate=payload.annual_rate,
